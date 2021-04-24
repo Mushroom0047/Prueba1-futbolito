@@ -14,9 +14,17 @@ namespace Prueba1_futbolito {
         private int Fuerza;
         private int Destreza;
 
-        public Jugador() {
+        public Jugador() {}
 
-        }
+        public Jugador(int registro, String nombre, String posicion, int resistencia, int velocidad, int fuerza, int destreza) {
+            Registro = registro;
+            Nombre = nombre;
+            Posicion = posicion;
+            Resistencia = resistencia;
+            Velocidad = velocidad;
+            Fuerza = fuerza;
+            Destreza = destreza;
+    }
 
         public int registro { get { return Registro; } }        
 
