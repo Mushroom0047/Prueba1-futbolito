@@ -26,13 +26,13 @@ namespace Prueba1_futbolito {
             Destreza = destreza;
     }
 
-        public int registro { get { return Registro; } }        
+        public int registro { get { return Registro; } }
+        public String posicion { get { return Posicion; } }
 
 
         public string DatosJugador() {
             String playerData;
-            playerData = "posición";
-
+            playerData = $"{Posicion}, {Nombre}, Resistencia: {Resistencia}, Velocidad: {Velocidad}, Fuerza: {Fuerza} y Destreza: {Destreza}";
             return playerData;
         }
     }
