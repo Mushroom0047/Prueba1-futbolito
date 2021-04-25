@@ -53,7 +53,7 @@ namespace Prueba1_futbolito {
 
         public static void AddPlayers() {
             int v = 20;
-            String[] names = { "Adrián Droide", "Andrés Trozado", "Igor Dito", "Juan Macho Seco", "Jorge Nitales", "Miguel Marco Gol", "Antonio Bragueta Suelta", "Oscar Acol", "Julio Feo", "Paul Vazo" };
+            String[] names = { "Adrián Droide", "Andrés Trozado", "Igor Dito", "Juan Macho Seco", "Jorge Nitales", "Miguel Marco Gol", "Antonio Bragueta Suelta", "Oscar Acol", "Julio Feo", "Paul Vazo", "Alan Brito", "Elver Galarga", "Aquiles Brinco", "Elvis Tek", "Hector Valdes" };
 
             for (int i = 0; i < names.Length; i++) {
                 Jugador x = new Jugador(i+100, names[i], "Delantero", v, v, v, v);
@@ -161,7 +161,7 @@ namespace Prueba1_futbolito {
                                     Console.WriteLine("Ingrese la Resistencia del jugador");
                                     ConsoleIntro(habilityPoints);                                    
                                     n = int.Parse(Console.ReadLine()); ;
-                                    if (n > 0 && n <= habilityPoints) {                                        
+                                    if (n >= 0 && n <= habilityPoints) {                                        
                                         habilityPoints -= n;
                                         playerData[1] = n;
                                         varSwi = 2;
@@ -174,7 +174,7 @@ namespace Prueba1_futbolito {
                                     Console.WriteLine("Ingrese la Velocidad del jugador");
                                     ConsoleIntro(habilityPoints);                                    
                                     n = int.Parse(Console.ReadLine()); ;
-                                    if (n > 0 && n <= habilityPoints) {
+                                    if (n >= 0 && n <= habilityPoints) {
                                         habilityPoints -= n;
                                         playerData[2] = n;
                                         varSwi = 3;
@@ -187,7 +187,7 @@ namespace Prueba1_futbolito {
                                     Console.WriteLine("Ingrese la Fuerza del jugador");
                                     ConsoleIntro(habilityPoints);                                    
                                     n = int.Parse(Console.ReadLine()); ;
-                                    if (n > 0 && n <= habilityPoints) {
+                                    if (n >= 0 && n <= habilityPoints) {
                                         habilityPoints -= n;
                                         playerData[3] = n;
                                         varSwi = 4;
@@ -200,7 +200,7 @@ namespace Prueba1_futbolito {
                                     Console.WriteLine("Ingrese la Destreza del jugador");
                                     ConsoleIntro(habilityPoints);                                    
                                     n = int.Parse(Console.ReadLine()); ;
-                                    if (n > 0 && n <= habilityPoints) {
+                                    if (n >= 0 && n <= habilityPoints) {
                                         habilityPoints -= n;
                                         playerData[4] = n;
                                         varSwi = 5;
@@ -213,14 +213,8 @@ namespace Prueba1_futbolito {
                         }
                         //Create Jugador object                      
                         Jugador player = new Jugador(playerData[0], playerName, playerPosition, playerData[1], playerData[2], playerData[3], playerData[4]);
-                        //Save object Jugador in tha array
-                        if (Equipo.Count < 15) {
-                            Equipo.Add(player);
-                        } else {
-                            Equipo.Add(player);
-                            Equipo.RemoveAt(0);
-                        }
-                        
+                        //Save object Jugador in tha array                       
+                        Equipo.Add(player);
                         habilityPoints = 100;
 
                         break;
@@ -273,14 +267,14 @@ namespace Prueba1_futbolito {
                         String wordToSearch = Console.ReadLine();
                         if (Equipo.Count > 0) {
                             foreach (Jugador j in Equipo) {
-                                String chain = j.DatosJugador();
+                                String chain = j.registro + "|" + j.DatosJugador();
                                 Boolean contain = chain.Contains(wordToSearch);
                                 if (contain) {
                                     Console.BackgroundColor = ConsoleColor.Green;
                                     Console.ForegroundColor = ConsoleColor.White;
                                     Console.WriteLine("Jugador encontrado:");
                                     Console.ResetColor();
-                                    Console.WriteLine(j.DatosJugador());
+                                    Console.WriteLine(j.registro +"|"+ j.DatosJugador());
                                 }
                             }
                         } else {
@@ -288,24 +282,65 @@ namespace Prueba1_futbolito {
                         }
                         break;
                     case 4://Show team
-                        //ConsoleTitle("Ingrese el número de jugador");
-                        //int numb;
-                        //try {
-                        //    numb = int.Parse(Console.ReadLine());
-                        //} catch (System.FormatException) {
-                        //    numb = -1;
-                        //}
-                        //if (Equipo.Count >=  numb) {
-                        //    Equipo[numb].DatosJugador
-                        //} else {
-                        //    ConsoleTitle("Sin coincidencias");
-                        //}
+                        ConsoleTitle("¿Que desa listar?");
+                        Console.WriteLine("1: Titulares \n2: Suplentes");
+                        opc = int.Parse(Console.ReadLine());
+                        //Titulares
+                        if (opc == 1) {
+                            for (int i = 0; i < 11; i++) {
+                                if (Equipo[i] != null) {
+                                    Console.BackgroundColor = ConsoleColor.Green;
+                                    Console.ForegroundColor = ConsoleColor.White;
+                                    Console.WriteLine("Titular encontrado:");
+                                    Console.ResetColor();
+                                    Console.WriteLine($"({i+1})" + "|"+Equipo[i].DatosJugador());
+                                }
+                            }
+                        } else{
+                            for (int i = 11; i < 15; i++) {
+                                if (Equipo[i] != null) {
+                                    Console.BackgroundColor = ConsoleColor.Green;
+                                    Console.ForegroundColor = ConsoleColor.White;
+                                    Console.WriteLine("Suplente encontrado:");
+                                    Console.ResetColor();
+                                    Console.WriteLine($"({i+1})" + "|" + Equipo[i].DatosJugador());
+                                }
+                            }
+                        }
                         break;
                     case 5://Change principal to secondary
+                        int tit, sup;                        
+                        ConsoleTitle("Ingrese el número de Titular (1-11)");
+                        tit = int.Parse(Console.ReadLine());
+                        ConsoleTitle("Ingrese eñ número de Suplente (12-15)");
+                        sup = int.Parse(Console.ReadLine());
+
+                        //Replace Titular
+                        if (Equipo[tit+1] != null) {
+                            Equipo.Add(Equipo[tit-1]);
+                            Equipo[tit - 1] = Equipo[sup - 1];
+                            Equipo[sup - 1] = Equipo[Equipo.Count-1];
+                            Equipo.RemoveAt(Equipo.Count-1);
+
+                            //Inform to the user the change completed
+                            ConsoleTitle("Cambio realizado exitosamente !!!");
+                            Console.BackgroundColor = ConsoleColor.Green;
+                            Console.ForegroundColor = ConsoleColor.White;
+                            Console.WriteLine("Ingesa como titular:");
+                            Console.ResetColor();
+                            Console.WriteLine(Equipo[tit-1].DatosJugador());
+                            Console.BackgroundColor = ConsoleColor.Red;
+                            Console.ForegroundColor = ConsoleColor.White;
+                            Console.WriteLine("Sale como Suplente:");
+                            Console.ResetColor();
+                            Console.WriteLine(Equipo[sup - 1].DatosJugador());
+
+                        } else {
+                            Console.WriteLine("No existe el jugador");
+                        }   
                         break;
                     case 6://Exit
-                        option = 0;
-                        
+                        option = 0;                        
                         break;
                 }
             }
