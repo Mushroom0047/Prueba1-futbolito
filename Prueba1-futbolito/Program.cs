@@ -14,11 +14,9 @@ namespace Prueba1_futbolito {
             if (reg < 0)reg = reg * -1;
 
             if (Equipo.Count >0) {
-                for (int i = 0; i < Equipo.Capacity; i++) {
+                for (int i = 0; i < Equipo.Count; i++) {
                     if (Equipo[i].registro == reg) {
                         result = true;
-                        break;
-                    } else {
                         break;
                     }
                 }
@@ -283,7 +281,7 @@ namespace Prueba1_futbolito {
                         break;
                     case 4://Show team
                         ConsoleTitle("¿Que desa listar?");
-                        Console.WriteLine("1: Titulares \n2: Suplentes");
+                        Console.WriteLine("1: Titulares \n2: Suplentes \n3: Todos los jugadores");
                         opc = int.Parse(Console.ReadLine());
                         //Titulares
                         if (opc == 1) {
@@ -296,7 +294,7 @@ namespace Prueba1_futbolito {
                                     Console.WriteLine($"({i+1})" + "|"+Equipo[i].DatosJugador());
                                 }
                             }
-                        } else{
+                        } else if (opc == 2){
                             for (int i = 11; i < 15; i++) {
                                 if (Equipo[i] != null) {
                                     Console.BackgroundColor = ConsoleColor.Green;
@@ -305,6 +303,11 @@ namespace Prueba1_futbolito {
                                     Console.ResetColor();
                                     Console.WriteLine($"({i+1})" + "|" + Equipo[i].DatosJugador());
                                 }
+                            }
+                        } else {//Show all players in the array
+                            ConsoleTitle("Todos los jugadores");
+                            foreach (Jugador j in Equipo) {
+                                Console.WriteLine($"{Equipo.IndexOf(j)+1} |" + j.DatosJugador());
                             }
                         }
                         break;
